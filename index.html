@@ -1,0 +1,102 @@
+<!-- De la Cruz, Juvy Anncel -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Converter</title>
+    <style>
+        body {
+            font-family: Verdana, sans-serif;
+            background-color: #C7B8EA;
+        }
+
+        .container {
+            max-width: 500px;
+            height: 450px;
+            margin: auto;
+            padding: 20px;
+            background-color: #fafafa;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input[type="radio"] {
+            margin: 10px 5px;
+        }
+
+        label {
+            margin: 10px 0;
+        }
+
+        input[type="number"] {
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        #result {
+            margin-top: 35px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Temperature Converter</h1>
+        <form id="converter">
+            <input type="radio" id="celsius" name="type" value="c" checked>
+            <label for="celsius">Celsius to Fahrenheit</label><br>
+
+            <input type="radio" id="fahrenheit" name="type" value="f">
+            <label for="fahrenheit">Fahrenheit to Celsius</label><br> <br>
+
+            <input type="number" id="value" placeholder="Enter temperature value" required>
+            <button type="submit">Convert</button>
+        </form>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        document.getElementById('converter').addEventListener('submit', function(event){
+            event.preventDefault();
+            const type =
+            document.querySelector('input[name="type"]:checked').value;
+            const value = document.getElementById('value').value;
+            fetch(`http://localhost:3000/convert?type=${type}&value=${value}`)
+                .then(response => response.text())
+                .then(data => document.getElementById('result').innerText = data)
+                .catch(error => console.error('Error:', error));
+        })
+    </script>
+    
+</body>
+</html>
